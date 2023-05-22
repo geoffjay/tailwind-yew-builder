@@ -2,8 +2,7 @@ version: "3"
 
 services:
   dev:
-    build: .
-    # image: matiu/tailwind-yew-builder
+    image: geoffjay/tailwind-yew-builder
     volumes:
       - ${INPUT:-./input}:/work/input
       - ${OUTPUT:-./output}:/work/output
@@ -12,7 +11,7 @@ services:
 
   watch:
     build: .
-    image: matiu/tailwind-yew-builder
+    image: geoffjay/tailwind-yew-builder
     volumes:
       - ${INPUT:-./input}:/work/input
       - ${OUTPUT:-./output}:/work/output
@@ -24,7 +23,7 @@ services:
     command: /bin/sh /work/input/watch.sh
 
   prod:
-    image: matiu/tailwind-yew-builder
+    image: geoffjay/tailwind-yew-builder
     volumes:
       - ${INPUT:-./input}:/work/input
       - ${OUTPUT:-./output}:/work/output
