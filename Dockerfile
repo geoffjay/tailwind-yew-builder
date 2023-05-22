@@ -1,9 +1,11 @@
 FROM --platform=linux/amd64 ubuntu
 
 # Ubuntu init
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install wget xz-utils inotify-tools -y
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y \
+  wget \
+  xz-utils \
+  inotify-tools
 RUN apt-get autoremove -y
 
 # Install node js
@@ -12,14 +14,13 @@ WORKDIR /downloads
 
 ENV NODE_VERSION="v18.12.1"
 
-RUN wget https://nodejs.org/dist/v18.12.1/node-${NODE_VERSION}-linux-x64.tar.xz
+RUN wget https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz
 RUN ls -lt
 RUN tar -xf 'node-'${NODE_VERSION}'-linux-x64.tar.xz'
 
 ENV PATH=/downloads/node-${NODE_VERSION}-linux-x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Create the npm package.json
-WORKDIR /
 RUN mkdir /work
 WORKDIR /work
 
@@ -29,7 +30,14 @@ RUN ls
 
 # Install tailwindcss
 RUN npm install -g npm@latest
-RUN npm install -g tailwindcss@latest tailwindcss-cli@latest postcss@latest autoprefixer@latest clean-css-cli@latest npm-run@latest @tailwindcss/forms
+RUN npm install -D \
+  tailwindcss@latest \
+  tailwindcss-cli@latest \
+  postcss@latest \
+  autoprefixer@latest \
+  clean-css-cli@latest \
+  npm-run@latest \
+  @tailwindcss/forms
 
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/work/node_modules/clean-css-cli/bin:/downloads/node-${NODE_VERSION}-linux-x64/bin
 
