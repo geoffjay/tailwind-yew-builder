@@ -45,6 +45,8 @@ COPY package.json .
 COPY postcss.config.js .
 COPY prod.sh .
 
+# RUN npx browserslist@latest --update-db
+
 ## For some reason we have to run this to get it to install properly
 RUN npx tailwindcss-cli@latest
 
